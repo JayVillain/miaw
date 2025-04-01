@@ -3,31 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Temukan Kucing Animasi</title>
+  <title>Cari Kucing - Game Animasi</title>
   <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gradient-to-br from-blue-400 to-indigo-600 flex flex-col items-center justify-center min-h-screen">
-  <header class="mb-8">
-    <h1 class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">Temukan Kucing!</h1>
-    <p class="mt-2 text-lg text-white">Klik salah satu tempat untuk menemukan kucing animasi</p>
+<body class="bg-gradient-to-br from-blue-500 to-indigo-700 flex flex-col items-center justify-center min-h-screen">
+  <header class="mb-8 text-center">
+    <h1 class="text-5xl font-bold text-white drop-shadow-lg">Cari Kucing!</h1>
+    <p class="mt-2 text-xl text-white">Klik pada spot yang tepat untuk menemukan kucing animasi</p>
   </header>
 
   <main class="relative w-full max-w-4xl px-4">
-    <!-- Area Game dengan beberapa Spot -->
-    <div class="grid grid-cols-3 gap-6">
-      <div class="spot bg-yellow-300 rounded-lg shadow-lg flex items-center justify-center cursor-pointer" data-id="1">Pohon</div>
-      <div class="spot bg-red-300 rounded-lg shadow-lg flex items-center justify-center cursor-pointer" data-id="2">Kotak</div>
-      <div class="spot bg-green-300 rounded-lg shadow-lg flex items-center justify-center cursor-pointer" data-id="3">Semak</div>
+    <!-- Area Game: Grid dengan Spot yang Cantik -->
+    <div class="grid grid-cols-3 gap-8">
+      <div class="spot bg-yellow-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="1">
+        <span class="text-2xl font-semibold">Pohon</span>
+      </div>
+      <div class="spot bg-red-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="2">
+        <span class="text-2xl font-semibold">Kotak</span>
+      </div>
+      <div class="spot bg-green-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="3">
+        <span class="text-2xl font-semibold">Semak</span>
+      </div>
     </div>
 
-    <!-- Elemen Kucing Animasi -->
+    <!-- Elemen Kucing Animasi (tanpa gambar) -->
     <div id="cat" class="cat hidden"></div>
   </main>
 
-  <footer class="mt-8">
-    <button id="play-again" class="bg-white text-indigo-600 font-bold py-2 px-6 rounded-full shadow-lg hidden">
+  <footer class="mt-10">
+    <button id="play-again" class="bg-white text-indigo-700 font-bold py-3 px-8 rounded-full shadow-xl hidden">
       Main Lagi
     </button>
   </footer>

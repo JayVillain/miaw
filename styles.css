@@ -4,43 +4,44 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Styling untuk spot */
 .spot {
-  height: 150px;
-  font-size: 1.25rem;
-  transition: transform 0.2s;
+  height: 160px;
+  transition: transform 0.2s ease;
 }
 .spot:hover {
   transform: scale(1.05);
 }
 
-/* Elemen kucing berbentuk lingkaran dengan ekor sederhana */
+/* Elemen kucing: menggunakan CSS murni untuk bentuk dan detail */
 .cat {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   background-color: #FFA500;
   border-radius: 50%;
-  /* Mulai di luar layar untuk animasi masuk */
-  left: -100px;
+  left: -120px; /* Mulai di luar layar */
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Ekor kucing menggunakan pseudo-elemen */
+/* Ekor kucing */
 .cat::before {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   background-color: #FFA500;
   border-radius: 50%;
   top: 50%;
-  right: -15px;
-  transform: translateY(-50%);
+  right: -20px;
+  transform: translateY(-50%) rotate(45deg);
+  box-shadow: -2px 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Mata kucing dengan pseudo-elemen */
+/* Wajah kucing dengan emotikon agar lebih lucu */
 .cat::after {
   content: '😺';
   position: absolute;
@@ -49,5 +50,5 @@ body {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
