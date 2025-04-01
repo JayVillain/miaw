@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Initialize game
     function initGame() {
+      // Reset status game
+      gameState.isGameOver = false; // Pastikan status game tidak "Game Over" saat inisialisasi
       updateDisplay();
       resetCats();
       selectRandomSpots();
@@ -281,6 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInterval(gameState.timerInterval);
       gameState.isGameOver = true;
       gameState.timeLeft = 0;
+      updateDisplay();
       
       // Play game over sound
       if (gameState.soundEnabled) {
@@ -295,11 +298,17 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Reset and restart the game
     function restartGame() {
+      // Clear any existing interval first
+      if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+      }
+      
+      // Reset game state
       gameState = {
         level: 1,
         score: 0,
         timeLeft: 30,
-        isGameOver: false,
+        isGameOver: false, // Pastikan status game direset
         isPaused: false,
         soundEnabled: gameState.soundEnabled,
         hiddenSpots: [],
@@ -322,7 +331,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
       
-      initGame();
+      // Make sure cats are reset
+      resetCats();
+      
+      // Initialize the game again
+      setTimeout(initGame, 100);
+      
+      console.log("Game restarted!");
     }
     
     // Pause/resume the game
@@ -484,23 +499,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     
-    // Event Listeners
-    spots.forEach(spot => {
-      spot.addEventListener("click", () => handleSpotClick(spot));
-    });
-    
-    playAgainBtn.addEventListener("click", restartGame);
-    restartBtn.addEventListener("click", restartGame);
-    continueBtn.addEventListener("click", () => {
-      levelUpModal.classList.add('hidden');
-      resetCats();
-      selectRandomSpots();
-      startTimer();
-    });
-    
-    pauseBtn.addEventListener("click", togglePause);
-    soundToggleBtn.addEventListener("click", toggleSound);
-    hintBtn.addEventListener("click", showHint);
+    // Event Listeners - Explicitly remove old listeners before adding new ones
+    function setupEventListeners() {
+      // Remove old listeners first (if any exist)
+      spots.forEach(spot => {
+        spot.removeEventListener("click", () => {});
+      });
+      
+      playAgainBtn.removeEventListener("click", restartGame);
+      restartBtn.removeEventListener("click", restartGame);
+      continueBtn.removeEventListener("click", () => {});
+      pauseBtn.removeEventListener("click", togglePause);
+      soundToggleBtn.removeEventListener("click", toggleSound);
+      hintBtn.removeEventListener("click", showHint);
+      
+      // Add new listeners
+      spots.forEach(spot => {
+        spot.addEventListener("click", () => handleSpotClick(spot));
+      });
+      
+      playAgainBtn.addEventListener("click", restartGame);
+      restartBtn.addEventListener("click", restartGame);
+      
+      continueBtn.addEventListener("click", () => {
+        levelUpModal.classList.add('hidden');
+        resetCats();
+        selectRandomSpots();
+        startTimer();
+      });
+      
+      pauseBtn.addEventListener("click", togglePause);
+      soundToggleBtn.addEventListener("click", toggleSound);
+      hintBtn.addEventListener("click", showHint);
+    }
     
     // Add extra CSS for confetti
     const style = document.createElement('style');
@@ -512,6 +543,9 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
     
+    // Setup event listeners
+    setupEventListeners();
+    
     // Start the game
     initGame();
-  });
+});
