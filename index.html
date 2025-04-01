@@ -4,42 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cari Kucing - Game Animasi</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Tailwind CSS CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gradient-to-br from-blue-500 to-indigo-700 flex flex-col items-center justify-center min-h-screen">
-  <header class="mb-8 text-center">
-    <h1 class="text-5xl font-bold text-white drop-shadow-lg">Cari Kucing!</h1>
-    <p class="mt-2 text-xl text-white">Klik pada spot yang tepat untuk menemukan kucing animasi</p>
-  </header>
+<body class="bg-gradient-to-br from-purple-600 via-blue-500 to-indigo-800 flex flex-col items-center justify-center min-h-screen overflow-x-hidden">
+  <!-- Floating elements for parallax background -->
+  <div class="parallax-container">
+    <div class="parallax-cloud cloud-1"><i class="fas fa-cloud text-white text-6xl opacity-60"></i></div>
+    <div class="parallax-cloud cloud-2"><i class="fas fa-cloud text-white text-5xl opacity-70"></i></div>
+    <div class="parallax-cloud cloud-3"><i class="fas fa-cloud text-white text-7xl opacity-50"></i></div>
+    <div class="parallax-bird bird-1"><i class="fas fa-dove text-yellow-200 text-xl"></i></div>
+    <div class="parallax-bird bird-2"><i class="fas fa-dove text-yellow-100 text-lg"></i></div>
+  </div>
 
-  <main class="relative w-full max-w-4xl px-4">
-    <!-- Area Game: Grid dengan Spot yang Cantik -->
-    <div class="grid grid-cols-3 gap-8">
-      <div class="spot bg-yellow-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="1">
-        <span class="text-2xl font-semibold">Pohon</span>
+  <div class="game-container relative z-10 w-full max-w-6xl px-4 flex flex-col items-center">
+    <!-- Game Header with animated title -->
+    <header class="mb-8 text-center">
+      <div class="title-container relative">
+        <h1 class="text-6xl font-bold text-white drop-shadow-xl game-title">Cari Kucing!</h1>
+        <div class="paw-print absolute -top-12 -right-12 text-4xl animate-bounce opacity-70">
+          <i class="fas fa-paw text-yellow-200"></i>
+        </div>
       </div>
-      <div class="spot bg-red-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="2">
-        <span class="text-2xl font-semibold">Kotak</span>
+      <p class="mt-4 text-xl text-white text-shadow">Klik pada spot yang tepat untuk menemukan kucing yang bersembunyi</p>
+      
+      <!-- Game Stats -->
+      <div class="game-stats flex justify-center mt-4 space-x-8">
+        <div class="stat-item text-white">
+          <i class="fas fa-clock mr-2"></i>
+          <span id="timer">30</span>
+        </div>
+        <div class="stat-item text-white">
+          <i class="fas fa-trophy mr-2"></i>
+          <span id="score">0</span>
+        </div>
+        <div class="stat-item text-white">
+          <i class="fas fa-level-up-alt mr-2"></i>
+          <span id="level">1</span>
+        </div>
       </div>
-      <div class="spot bg-green-400 rounded-xl shadow-2xl flex items-center justify-center cursor-pointer" data-id="3">
-        <span class="text-2xl font-semibold">Semak</span>
+    </header>
+
+    <!-- Game messages -->
+    <div id="message" class="message-box text-xl font-bold text-center mb-6 text-white hidden"></div>
+
+    <!-- Main Game Area -->
+    <main class="relative w-full">
+      <!-- Game Grid -->
+      <div class="game-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Spot templates - will be filled dynamically -->
+        <div class="spot garden-spot" data-id="1">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-tree"></i></div>
+            <span class="spot-name">Pohon</span>
+          </div>
+        </div>
+        <div class="spot house-spot" data-id="2">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-box"></i></div>
+            <span class="spot-name">Kotak</span>
+          </div>
+        </div>
+        <div class="spot bush-spot" data-id="3">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-leaf"></i></div>
+            <span class="spot-name">Semak</span>
+          </div>
+        </div>
+        <div class="spot roof-spot" data-id="4">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-home"></i></div>
+            <span class="spot-name">Atap</span>
+          </div>
+        </div>
+        <div class="spot car-spot" data-id="5">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-car"></i></div>
+            <span class="spot-name">Mobil</span>
+          </div>
+        </div>
+        <div class="spot pillow-spot" data-id="6">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-bed"></i></div>
+            <span class="spot-name">Bantal</span>
+          </div>
+        </div>
+        <div class="spot basket-spot" data-id="7">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-shopping-basket"></i></div>
+            <span class="spot-name">Keranjang</span>
+          </div>
+        </div>
+        <div class="spot fridge-spot" data-id="8">
+          <div class="spot-content">
+            <div class="spot-icon"><i class="fas fa-door-closed"></i></div>
+            <span class="spot-name">Lemari</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Cat container and animations -->
+      <div id="cat-container" class="absolute w-full h-full top-0 left-0 pointer-events-none">
+        <!-- Main animated cat -->
+        <div id="cat" class="cat hidden"></div>
+        
+        <!-- Cat friends that appear on higher levels -->
+        <div id="orange-cat" class="cat orange-cat hidden"></div>
+        <div id="black-cat" class="cat black-cat hidden"></div>
+        
+        <!-- Cat paw prints that appear randomly -->
+        <div class="paw-prints"></div>
+      </div>
+    </main>
+
+    <!-- Game Controls -->
+    <footer class="mt-10 flex flex-col items-center space-y-4">
+      <button id="play-again" class="game-btn play-again-btn hidden">
+        <i class="fas fa-redo-alt mr-2"></i> Main Lagi
+      </button>
+      
+      <div class="controls flex space-x-4 mt-6">
+        <button id="sound-toggle" class="control-btn">
+          <i class="fas fa-volume-up"></i>
+        </button>
+        <button id="hint-btn" class="control-btn">
+          <i class="fas fa-lightbulb"></i>
+        </button>
+        <button id="pause-btn" class="control-btn">
+          <i class="fas fa-pause"></i>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Game Modals -->
+  <div id="level-up-modal" class="game-modal hidden">
+    <div class="modal-content">
+      <h2>Level Naik!</h2>
+      <p>Selamat! Anda telah naik ke level <span id="new-level">2</span></p>
+      <div class="modal-cats">
+        <div class="modal-cat">😺</div>
+      </div>
+      <button id="continue-btn" class="game-btn mt-4">Lanjutkan</button>
     </div>
+  </div>
 
-    <!-- Elemen Kucing Animasi (tanpa gambar) -->
-    <div id="cat" class="cat hidden"></div>
-  </main>
+  <div id="game-over-modal" class="game-modal hidden">
+    <div class="modal-content">
+      <h2>Game Over</h2>
+      <p>Skor Anda: <span id="final-score">0</span></p>
+      <button id="restart-btn" class="game-btn mt-4">Main Lagi</button>
+    </div>
+  </div>
 
-  <footer class="mt-10">
-    <button id="play-again" class="bg-white text-indigo-700 font-bold py-3 px-8 rounded-full shadow-xl hidden">
-      Main Lagi
-    </button>
-  </footer>
-
-  <!-- GSAP CDN -->
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

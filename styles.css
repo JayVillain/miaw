@@ -1,47 +1,268 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+
+:root {
+  --primary-color: #6C63FF;
+  --secondary-color: #FF6584;
+  --accent-color: #FFD700;
+  --background-color: #4834d4;
+  --success-color: #00b894;
+  --danger-color: #d63031;
+  --neutral-color: #636e72;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Fredoka', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+  background-size: 200% 200%;
+  animation: gradientBackground 15s ease infinite;
 }
 
-/* Styling untuk spot */
+@keyframes gradientBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Parallax Elements */
+.parallax-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.parallax-cloud, .parallax-bird {
+  position: absolute;
+  transition: transform 0.1s;
+}
+
+.cloud-1 {
+  top: 15%;
+  left: 10%;
+  animation: float 25s infinite linear;
+}
+
+.cloud-2 {
+  top: 30%;
+  right: 15%;
+  animation: float 18s infinite linear reverse;
+}
+
+.cloud-3 {
+  bottom: 25%;
+  left: 20%;
+  animation: float 22s infinite linear;
+}
+
+.bird-1 {
+  top: 40%;
+  right: 30%;
+  animation: fly 35s infinite linear;
+}
+
+.bird-2 {
+  bottom: 35%;
+  left: 40%;
+  animation: fly 30s infinite linear reverse;
+}
+
+@keyframes float {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(200px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes fly {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(100px, -50px) rotate(5deg); }
+  50% { transform: translate(200px, 0) rotate(0deg); }
+  75% { transform: translate(100px, 50px) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Game Container */
+.game-container {
+  padding: 2rem;
+}
+
+/* Game Title Animation */
+.game-title {
+  display: inline-block;
+  position: relative;
+  animation: glowText 2s ease-in-out infinite alternate;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes glowText {
+  0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+  100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Game Stats */
+.game-stats {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  backdrop-filter: blur(5px);
+  display: inline-flex;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+/* Message Box */
+.message-box {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  animation: fadeInUp 0.5s;
+  max-width: 80%;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Game Grid & Spots */
+.game-grid {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 .spot {
-  height: 160px;
-  transition: transform 0.2s ease;
-}
-.spot:hover {
-  transform: scale(1.05);
+  height: 150px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Elemen kucing: menggunakan CSS murni untuk bentuk dan detail */
+.spot:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.spot-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.spot-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.spot:hover .spot-icon {
+  transform: scale(1.2);
+}
+
+.spot-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Individual spot styling */
+.garden-spot {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.house-spot {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.bush-spot {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+}
+
+.roof-spot {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.car-spot {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.pillow-spot {
+  background: linear-gradient(135deg, #f1c40f, #f39c12);
+}
+
+.basket-spot {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.fridge-spot {
+  background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+/* Cat animations and styling */
 .cat {
   position: absolute;
-  width: 90px;
-  height: 90px;
-  background-color: #FFA500;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  left: -120px; /* Mulai di luar layar */
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+  z-index: 100;
+  transition: all 0.2s;
+  pointer-events: none;
 }
 
-/* Ekor kucing */
+/* Main cat - Orange */
+.cat {
+  background-color: #FFA500;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
 .cat::before {
   content: '';
   position: absolute;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   background-color: #FFA500;
   border-radius: 50%;
   top: 50%;
-  right: -20px;
+  right: -15px;
   transform: translateY(-50%) rotate(45deg);
-  box-shadow: -2px 2px 8px rgba(0,0,0,0.1);
+  box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Wajah kucing dengan emotikon agar lebih lucu */
 .cat::after {
   content: '😺';
   position: absolute;
@@ -50,5 +271,208 @@ body {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
+  font-size: 2.5rem;
+}
+
+/* Orange cat variation */
+.orange-cat {
+  background-color: #FF8C00;
+  width: 90px;
+  height: 90px;
+}
+
+.orange-cat::before {
+  background-color: #FF8C00;
+  width: 25px;
+  height: 25px;
+}
+
+.orange-cat::after {
+  content: '😼';
   font-size: 2.2rem;
+}
+
+/* Black cat variation */
+.black-cat {
+  background-color: #333;
+  width: 85px;
+  height: 85px;
+}
+
+.black-cat::before {
+  background-color: #333;
+  width: 22px;
+  height: 22px;
+}
+
+.black-cat::after {
+  content: '🐱';
+  font-size: 2rem;
+}
+
+/* Paw prints animation */
+.paw-prints {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.paw {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.4);
+  animation: fadePaw 3s forwards;
+  font-size: 1.25rem;
+  transform: rotate(var(--rotation, 0deg));
+}
+
+@keyframes fadePaw {
+  0% { opacity: 0; }
+  20% { opacity: 0.8; }
+  70% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+
+/* Game Buttons */
+.game-btn {
+  background: linear-gradient(135deg, var(--primary-color), #5345e7);
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #5345e7, var(--primary-color));
+}
+
+.play-again-btn {
+  animation: pulseButton 2s infinite;
+}
+
+@keyframes pulseButton {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.control-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Game Modals */
+.game-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #4834d4, #341f97);
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 400px;
+  position: relative;
+  animation: popIn 0.5s;
+}
+
+.modal-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.modal-cats {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.modal-cat {
+  font-size: 3rem;
+  margin: 0 0.5rem;
+  animation: jumpCat 1s infinite alternate;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes jumpCat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .spot {
+    height: 120px;
+  }
+  
+  .game-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .spot-icon {
+    font-size: 2rem;
+  }
+  
+  .game-stats {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
