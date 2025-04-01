@@ -2,4 +2,55 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+}
+
+.spot {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.spot:hover {
+    transform: scale(1.1);
+}
+
+/* Animasi Kucing */
+.cat {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: orange;
+    border-radius: 50%;
+    bottom: 100px;
+    transition: all 0.5s;
+}
+
+.cat::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: orange;
+    border-radius: 50%;
+    top: -15px;
+    left: 10px;
+}
+
+.cat::after {
+    content: '🐱';
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
